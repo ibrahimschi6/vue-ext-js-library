@@ -13,7 +13,16 @@
         <h3>{{ title }}</H3>
             <button>{{buttonTitle}}</button>
             <p>{{paragraf}}</p>
+            <p v-text="paragraf"></p>
+
             <a v-bind:href="link" v-bind:data-id="dataId">Test Google</a> 
+
+            <a :href="link" v-bind:data-id="dataId">Test Google</a> 
+            
+            <p> {{ detail }}</p>
+            
+            <p v-html="detail2"></p>
+
     </div>
     
     <script>
@@ -24,7 +33,10 @@
                 buttonTitle:"Click to Order..",
                 paragraf:"lorem ipsum",
                 link: "http://www.google.com",
-                dataId:"Some Data"
+                dataId:"Some Data",
+                detail:"<b>This is string interpolation render behavior</b>",
+                detail2:"<b>This is string interpolation render behavior of v-html</b>"
+
             }
         });
 
