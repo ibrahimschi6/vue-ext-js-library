@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title>Vue.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+        ul {
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+            width: 300px;
+            border: 1px solid #666;
+        }
+        li{
+            padding: 2px 50px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+        
+        .red{
+            background-color: red;
+        }
+
+        .green{
+            background-color: lime;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <ul>
+            <li v-for="item in list">{{ item }}</li>
+        </ul>
+        <hr/>
+        <div v-for="(value,key) in customer ">
+            {{ key + " " + value}}
+        </div>
+    <hr/>
+        <div v-for="(value,key) in customer ">
+            <strong>{{ key}}</strong> {{ value}}
+        </div>
+    <hr/>
+        <ul>
+        <li v-for="product in productList">
+            {{product}}
+        </li>    
+        </ul>
+        <input type="text" v-model="sellCount">
+        <ul>
+            <li v-for="product in productList" v-if="product.count >= 0" 
+                :class="backgroudByCount(product)">
+                <span>{{product.title}} - {{product.count}} </span>
+                <button :disabled="product.count == 0" @click="sellProduct(product)"> Sell</button></li>    
+            </ul>
+            <p v-if="sellWarning">The amount is more than existing stock</p>
+    </div>
+    
+    <script>
+       new Vue({
+        el:"#app",
+        data:{            
+            sellCount:2,
+            sellWarning:false,
+            list:["Blue","Black","Red"],
+            customer:{
+                name:"John",
+                lastname:"Black",
+                email:"john@email.com"
+            },
+            productList:[
+                {
+                    title:"MacBook Pro",
+                    price: 1300,
+                    count: 0
+                },
+                {
+                    title:"iPhone",
+                    price: 800,
+                    count: 20
+                },
+                {
+                    title:"Keyboard",
+                    price: 10,
+                    count: 100
+                }
+
+            ]            
+        }, methods:{
+            sellProduct(product){
+                if(this.sellCount > product.count){
+                    this.sellWarning=true;
+                }
+                else{
+                    this.sellWarning=false;                
+                product.count = product.count - this.sellCount
+                }
+            },
+            backgroudByCount(product){
+                return {'green' : product.count>0, 'red' : product.count <= 0}
+            }
+            
+        },computed:{
+            
+        }
+       });
+
+    </script>
+</body>
+</html>
